@@ -1,0 +1,11 @@
+{
+  "name": "SubscriptionContract",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "openzeppelin-solidity": "^2.1.2",
+    "truffle-hdwallet-provider": "^1.0.0-web3one.1",
+    "web3": "^1.0.0-beta.36"
+  }
+}
