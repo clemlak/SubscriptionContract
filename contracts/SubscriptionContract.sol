@@ -29,6 +29,12 @@ contract SubscriptionContract is Ownable {
         uint256 period
     );
 
+    function updateTokenAddress(address newTokenAddress) public onlyOwner() {
+        require(newTokenAddress != address(0), "New token address is invalid");
+
+        tokenAddress = newTokenAddress;
+    }
+
     function createSubscription(
         uint256 periodMultiplier
     ) public {
@@ -82,18 +88,16 @@ contract SubscriptionContract is Ownable {
         );
 
         if (subscribersToSubscriptions[msg.sender].isPaused == true) {
-            uint256 subscriptionPeriod = SafeMath.add(
+            subscribersToSubscriptions[msg.sender].period = SafeMath.add(
                 now,
                 SafeMath.mul(subscriptionFee, periodMultiplier)
             );
         } else {
-            uint256 subscriptionPeriod = SafeMath.add(
+            subscribersToSubscriptions[msg.sender].period = SafeMath.add(
                 subscribersToSubscriptions[msg.sender].period,
                 SafeMath.mul(subscriptionFee, periodMultiplier)
             );
         }
-
-        subscribersToSubscriptions[msg.sender].period = subscriptionPeriod;
     }
 
     function getSubscription(address subscriber) public view returns (
