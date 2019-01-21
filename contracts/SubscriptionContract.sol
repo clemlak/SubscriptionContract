@@ -81,12 +81,19 @@ contract SubscriptionContract is Ownable {
             "Funds could not be transfered"
         );
 
-        uint256 subscribedPeriod = SafeMath.add(
-            now,
-            SafeMath.mul(subscriptionFee, periodMultiplier)
-        );
+        if (subscribersToSubscriptions[msg.sender].isPaused == true) {
+            uint256 subscriptionPeriod = SafeMath.add(
+                now,
+                SafeMath.mul(subscriptionFee, periodMultiplier)
+            );
+        } else {
+            uint256 subscriptionPeriod = SafeMath.add(
+                subscribersToSubscriptions[msg.sender].period,
+                SafeMath.mul(subscriptionFee, periodMultiplier)
+            );
+        }
 
-        subscribersToSubscriptions[msg.sender].period = subscribedPeriod;
+        subscribersToSubscriptions[msg.sender].period = subscriptionPeriod;
     }
 
     function getSubscription(address subscriber) public view returns (
