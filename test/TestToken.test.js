@@ -1,5 +1,7 @@
 /* eslint-env node, mocha */
-/* global artifacts, contract, it, assert */
+/* global artifacts, contract, assert */
+
+const Web3 = require('web3');
 
 const TestToken = artifacts.require('TestToken');
 
@@ -13,11 +15,11 @@ contract('TestToken', (accounts) => {
 
   it('Should check the total supply of the token', () => instance.totalSupply()
     .then((totalSupply) => {
-      assert.equal(totalSupply, 21000000 * 10 ** 18, 'Total supply is wrong');
-  }));
+      assert.equal(totalSupply, Web3.utils.toWei('21000000'), 'Total supply is wrong');
+    }));
 
   it('Should check the balance of account 0', () => instance.balanceOf(accounts[0])
     .then((balance) => {
-      assert.equal(balance, 21000000 * 10 ** 18, 'Balance is wrong!');
+      assert.equal(balance, Web3.utils.toWei('21000000'), 'Balance is wrong!');
     }));
 });
